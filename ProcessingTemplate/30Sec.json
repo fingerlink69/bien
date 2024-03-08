@@ -14,7 +14,7 @@
   "customFieldValues": {
   },
   "processingCommand": {
-    "script": "for i in {1..30}; do date; sleep 1; done
+    "script": "for i in {1..40}; do date; sleep 1; done
 
 "
   },
