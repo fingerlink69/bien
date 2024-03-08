@@ -1,0 +1,88 @@
+{
+  "description": "30 Second Test",
+  "highRiskStatisticMethod": "PERCENT",
+  "highRiskStatisticPeriod": "WEEK",
+  "highRiskThreshold": 5,
+  "node": "NodeTestingBien",
+  "owner": "bien.levasty@infinitedata.com",
+  "priority": "0",
+  "processingType": "TASK",
+  "serverNodeType": "LINUX",
+  "statisticMethod": "AVERAGE",
+  "statisticPeriod": "MONTH",
+  "taskType": "SH",
+  "customFieldValues": {
+  },
+  "processingCommand": {
+    "script": "for i in {1..30}; do date; sleep 1; done
+
+"
+  },
+  "actions": 
+  [
+    {
+      "processingActionType": "FORCE_COMPLETED",
+      "processingEventCategory": "PROCESSING",
+      "processingEventType": "PROCESSING_FAILED",
+      "condition": {
+        "criteria": 
+        [
+          {
+            "fieldName": "exitCode",
+            "operator": "EQ",
+            "value": "3"
+          }
+        ],
+        "operator": "AND"
+      },
+      "processingCommand": {
+        "actionTargetType": "RELATED",
+        "keepForcedStatus": true,
+        "operator": "",
+        "relation": {
+          "relationType": "PEER"
+        },
+        "restartType": "RESTART_FROM_BEGINNING"
+      }
+    },
+    {
+      "processingActionType": "NOTIFY_EMAIL",
+      "processingEventCategory": "PROCESSING",
+      "processingEventType": "PROCESSING_COMPLETED",
+      "processingCommand": {
+        "contentType": "TEXT",
+        "message": "This is just a test...",
+        "recipient": "test@test.com",
+        "subject": "Testing Notify Email"
+      }
+    },
+    {
+      "duration": 130,
+      "durationThresholdType": "PERCENT",
+      "processingActionType": "ADD_TAG",
+      "processingEventCategory": "PROCESSING",
+      "processingEventType": "EXECUTING_LONG",
+      "processingCommand": {
+        "actionTargetType": "SELF",
+        "keepForcedStatus": true,
+        "operator": "",
+        "restartType": "RESTART_FROM_BEGINNING",
+        "value": "LONGRUNING"
+      }
+    },
+    {
+      "duration": 120,
+      "durationThresholdType": "PERCENT",
+      "processingActionType": "ADD_TAG",
+      "processingEventCategory": "PROCESSING",
+      "processingEventType": "EXECUTING_SHORT",
+      "processingCommand": {
+        "actionTargetType": "SELF",
+        "keepForcedStatus": true,
+        "operator": "",
+        "restartType": "RESTART_FROM_BEGINNING",
+        "value": "TEST"
+      }
+    }
+  ]
+}
