@@ -1,0 +1,30 @@
+{
+  "owner": "dawiener",
+  "priority": "0",
+  "processingType": "TASK",
+  "serverNodeType": "LINUX",
+  "taskType": "PYTHON",
+  "processingCommand": {
+    "script": "import json
+
+obj_name = \"${TaskMonObjName}\"
+split_result = obj_name.split('.')
+
+if len(split_result) < 3 or len(split_result) > 5:
+    print(f'{obj_name} template name doesn\'t not comply with the naming convention, ignoring this task error.')
+    exit(1)
+    
+if '.GBL' in obj_name or '.Gbl' in obj_name:
+  kvs_name = f\"GlobalMetadata.Anow.dskv\"
+else:
+  uc_name = split_result[-2]
+  if obj_name.isupper():
+    kvs_name = f\"METADATA.{uc_name}.V\"
+  else:
+    kvs_name = f\"Metadata.{uc_name}.dskv\"
+
+gsn_json_string = \"KVS::%s(GSN)\" % (kvs_name)
+
+print( \"ANOWVAR:PARENT.KVS_NAME=\" + gsn_json_string )"
+  }
+}
